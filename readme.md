@@ -61,3 +61,6 @@ find . -name "*.py" | grep -v "node_modules" | xargs pylint
 
 
 
+## Roadmap
+
+Расширить проверки на модуль `django-environ`.
