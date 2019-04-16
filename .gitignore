@@ -1,0 +1,63 @@
+
+.vscode/
+
+.env
+.env-dev
+.env-compose
+tiny-lr.pid
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+.Python
+env/
+scout-env/
+venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+features/
+cover/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+
+# pyCharm stuff
+.idea/
+
+.pytest_cache/
+
+.vagrant/
+
+.DS_Store
+.mypy_cache
+.backlog
