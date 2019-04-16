@@ -19,14 +19,16 @@
 pip install pylint_env_vars
 ```
 
-Добавить плагин в `.pylintrc`, в секцию `MASTER`:
+Добавить в `.pylintrc`, в секцию `[MASTER]`, плагин:
 
 ```
 [MASTER]
 load-plugins = pylint_env_vars
 ```
 
-Добавить секцию `pylint_env_vars`, в которой указать путь, в котором таки можно обращаться к `os.environ`. 
+**Если в каком-то модуле таки разрешено обращаться к `os.environ`:**
+
+Добавить в `.pylintrc` секцию `[pylint_env_vars]` c этим модулем. 
 Это может быть регулярное выражение:
 
 ```
