@@ -1,4 +1,4 @@
-# Pylint os.environ Checker
+# Pylint Env Vars
 
 Плагин для Pylint, который запрещает использование os.environ в проекте.
 
