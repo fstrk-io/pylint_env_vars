@@ -16,21 +16,21 @@
 ## Установка и настройка
 
 ```
-pip install pylint_os_environ_checker
+pip install pylint_env_vars
 ```
 
 Добавить плагин в `.pylintrc`, в секцию `MASTER`:
 
 ```
 [MASTER]
-load-plugins = os_environ_checker
+load-plugins = pylint_env_vars
 ```
 
-Добавить секцию OS_ENVIRON_CHECKER, в которой указать путь, в котором таки можно обращаться к `os.environ`. 
+Добавить секцию `pylint_env_vars`, в которой указать путь, в котором таки можно обращаться к `os.environ`. 
 Это может быть регулярное выражение:
 
 ```
-[OS_ENVIRON_CHECKER]
+[pylint_env_vars]
 allow_in_modules = _devtools.*restore
 
 ```

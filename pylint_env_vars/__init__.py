@@ -13,7 +13,7 @@ def register(linter):
 class OsEnvironChecker(BaseChecker):
     __implements__ = IAstroidChecker
 
-    name = 'prohibit-os-environ'
+    name = 'pylint_env_vars'
     priority = -1
     msgs = {
         'R9000': (
@@ -37,8 +37,8 @@ class OsEnvironChecker(BaseChecker):
         self.check_this_module = True
 
         # достаем регулярку, в которой лежат пути для игнора (в dot-нотации)
-        if 'OS_ENVIRON_CHECKER' in linter.cfgfile_parser.sections():
-            config = linter.cfgfile_parser['OS_ENVIRON_CHECKER']
+        if 'pylint_env_vars' in linter.cfgfile_parser.sections():
+            config = linter.cfgfile_parser['pylint_env_vars']
             self.allow_in_modules = config.get('allow_in_modules')
         else:
             self.allow_in_modules = None
