@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: pylint-env-vars
-Version: 0.1
+Version: 0.2
 Summary: pylint_env_vars
 Home-page: https://github.com/fstrk-io/pylint_env_vars
 Author: Mikhail Novikov
