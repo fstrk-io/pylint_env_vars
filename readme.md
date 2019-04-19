@@ -1,44 +1,60 @@
 # Pylint Env Vars
 
-Плагин для Pylint, который запрещает использование `os.environ` в проекте.
+A Pylint plugin that prohibits usage of `os.environ` in certain files.
 
-## Зачем?
+## Reasoning
 
-Когда ссылки на переменные окружения разбросаны по большой кодовой базе 
-в разных местах, становится сложно предсказывать поведение приложения. 
+There is a common django/flask pattern that advises managing project settings 
+across different environments using  `base.py`, `prod.py`, `dev.py` etc.
+The choice of the setting file is usually controlled by an environment variable such as `DJANGO_SETTINGS_MODULE`.
+This file, in turn, relies on environment variables again, like so.:
 
-Особенно это мешает, если в проекте реализован паттерн настроек a la Django 
-с несколькими файлами `base.py`, `prod.py`, `dev.py` и т.д.,
-каждый из которых тоже опирается на переменные окружения.
+```python
+...
+SECRET_KEY = os.environ['SECRET_KEY']
+...
 
-Плагин `pylint_env_vars` позволяет запретить использование os.environ во всех файлах, кроме избранных.
+```
 
-## Установка и настройка
+So, when you have settings files referencing values from environment variables,
+it is dangerous to have other project files accessing `os.environ` as well: this leads to poor control over settings. Instead, these files should reference values set in the settings file:
+```python
+# some_obscure_module.py
+
+key = os.environ.get('SECRET_KEY', 123)  # bad!
+
+from django.conf import settings
+key = settings.SECRET_KEY   # good
+
+```  
+
+Enter `pylint_env_vars`. This plugin will fail checks if your files access `os.environ` somewhere.
+
+## Installation and Setup
 
 ```
 pip install pylint_env_vars
 ```
 
-Добавить в `.pylintrc`, в секцию `[MASTER]`, плагин:
+Add the plugin to `[MASTER]` section of your `.pylintrc`:
 
 ```
 [MASTER]
 load-plugins = pylint_env_vars
 ```
 
-**Если в каком-то модуле таки разрешено обращаться к `os.environ`:**
+**Add modules that can access `os.environ`, like your settings files**
 
-Добавить в `.pylintrc` секцию `[pylint_env_vars]` c этим модулем. 
-Это может быть регулярное выражение:
+Add a `[pylint_env_vars]` section to your `.pylintrc`. The arg can be a regex
 
 ```
 [pylint_env_vars]
-allow_in_modules = _devtools.*restore
+allow_in_modules = settings.*
 
 ```
 
 
-Ошибка, которую выдает чекер, - `R9000`:
+The error code is `R9000`:
 
 ```
 ...
@@ -47,13 +63,15 @@ getmybot/settings/my.py:97: [R9000(os-environ-prohibited), ] Usage of os.environ
 ```
 
 
-Как запустить pylint на все файлы и папки текущей директории:
+### Some helpers
+
+Run pylint for all `.py` files in the current dir:
 
 ```
 find . -name "*.py" | xargs pylint
 ```
 
-Как сделать игнор папки для всего pylint (не только для этого чекера):
+Run pylint for all `.py` files excluding some folder:
 
 ```
 find . -name "*.py" | grep -v "node_modules" | xargs pylint
@@ -63,4 +81,4 @@ find . -name "*.py" | grep -v "node_modules" | xargs pylint
 
 ## Roadmap
 
-Расширить проверки на модуль `django-environ`.
+Expand checks to `django-environ` library.
